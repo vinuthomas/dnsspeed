@@ -36,10 +36,10 @@ function calculateFailureRate(arr: number[]): number {
   // Wider and cleaner sparkline for table view
   const Sparkline = ({ data }: { data: number[] }) => {
     const maxVal = 100; // Cap visual max for better differentiation
-    if (data.length === 0) return <span className="text-slate-500 text-xs italic font-medium">Awaiting tests...</span>;
+    if (data.length === 0) return <div className="h-10 w-full" />;
   
     return (
-      <div className="flex items-end h-10 gap-[2px] w-full max-w-[280px] bg-slate-950/30 p-1 rounded-md border border-slate-800/60 shadow-inner">
+      <div className="flex items-end h-10 gap-[1px] w-full min-w-[150px] max-w-[220px] bg-slate-950/30 p-1 rounded-md border border-slate-800/60 shadow-inner">
         {data.map((val, i) => {
           if (val === -1) {
             return <div key={i} className="flex-1 bg-rose-500 h-full opacity-90 rounded-sm" title={`Test ${i+1}: Timeout`} />;
@@ -302,11 +302,11 @@ function Dashboard() {
               <table className="w-full text-left text-sm whitespace-nowrap">
                 <thead className="bg-slate-950/50 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800 text-xs">
                   <tr>
-                    <th className="px-6 py-4">Provider</th>
-                    <th className="px-6 py-4">IP Address</th>
-                    <th className="px-6 py-4 text-right">Median</th>
-                    <th className="px-6 py-4">Reliability</th>
-                    <th className="px-6 py-4 w-[300px]">Latency Distribution (50x)</th>
+                    <th className="px-4 py-3">Provider</th>
+                    <th className="px-4 py-3">IP Address</th>
+                    <th className="px-4 py-3 text-right">Median</th>
+                    <th className="px-4 py-3">Reliability</th>
+                    <th className="px-4 py-3 w-[220px]">Latency Distribution (50x)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
@@ -318,16 +318,16 @@ function Dashboard() {
 
                       return (
                         <tr key={server} className="hover:bg-slate-800/20 transition-colors group">
-                          <td className="px-6 py-4 font-medium text-slate-300 flex items-center gap-2">
+                          <td className="px-4 py-3 font-medium text-slate-300 flex items-center gap-2">
                             {provider.name}
                             {provider.isCustom && (
                               <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">Custom</span>
                             )}
                           </td>
-                          <td className="px-6 py-4 font-mono text-slate-400 group-hover:text-slate-300 transition-colors">
+                          <td className="px-4 py-3 font-mono text-slate-400 group-hover:text-slate-300 transition-colors">
                             {server}
                           </td>
-                          <td className="px-6 py-4 text-right font-bold text-base">
+                          <td className="px-4 py-3 text-right font-bold text-base">
                             {hasData ? (
                               <span className={stats.median === -1 ? 'text-red-400' : stats.median < 20 ? 'text-emerald-400' : stats.median < 50 ? 'text-yellow-400' : 'text-orange-400'}>
                                 {stats.median === -1 ? 'N/A' : `${stats.median} ms`}
@@ -336,7 +336,7 @@ function Dashboard() {
                               <span className="text-slate-600 font-normal">—</span>
                             )}
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-4 py-3">
                             {hasData ? (
                               stats.failureRate > 0 ? (
                                 <span className="inline-flex items-center px-2 py-1 rounded-md bg-red-500/10 text-red-400 text-xs font-semibold border border-red-500/20">
@@ -351,7 +351,7 @@ function Dashboard() {
                               <span className="text-slate-600">—</span>
                             )}
                           </td>
-                          <td className="px-6 py-3 min-w-[300px]">
+                          <td className="px-4 py-2 min-w-[220px]">
                             <Sparkline data={data} />
                           </td>
                         </tr>
