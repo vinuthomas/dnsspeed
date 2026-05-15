@@ -1,5 +1,6 @@
 {
   "name": "dnsspeed",
+  "version": "1.0.0",
   "description": "DNS Speed Test and Comparison Tool",
   "keywords": [
     "electron",
