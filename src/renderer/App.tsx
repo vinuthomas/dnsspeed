@@ -78,7 +78,9 @@ function Dashboard() {
     const saved = localStorage.getItem('customDnsProviders');
     if (saved) {
       try {
-        setProviders(JSON.parse(saved));
+        const parsed = JSON.parse(saved) as DnsProvider[];
+        // Filter out legacy 'Current System DNS' to avoid duplicates
+        setProviders(parsed.filter(p => p.name !== 'Current System DNS'));
       } catch (e) {
         console.error('Failed to parse saved providers', e);
       }
@@ -306,7 +308,7 @@ function Dashboard() {
                     <th className="px-4 py-3">IP Address</th>
                     <th className="px-4 py-3 text-right">Median</th>
                     <th className="px-4 py-3">Reliability</th>
-                    <th className="px-4 py-3 w-[220px]">Latency Distribution (50x)</th>
+                    <th className="px-4 py-3 w-full min-w-[200px]">Latency Distribution (50x)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
@@ -351,7 +353,7 @@ function Dashboard() {
                               <span className="text-slate-600">—</span>
                             )}
                           </td>
-                          <td className="px-4 py-2 min-w-[220px]">
+                          <td className="px-4 py-2 w-full min-w-[200px]">
                             <Sparkline data={data} />
                           </td>
                         </tr>
