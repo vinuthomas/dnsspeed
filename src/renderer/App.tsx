@@ -308,7 +308,7 @@ function Dashboard() {
                     <th className="px-4 py-3">IP Address</th>
                     <th className="px-4 py-3 text-right">Median</th>
                     <th className="px-4 py-3">Reliability</th>
-                    <th className="px-4 py-3 w-full min-w-[200px]">Latency Distribution (50x)</th>
+                    <th className="px-4 py-3 w-full min-w-[200px]">Latency</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
