@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { calculateMedian, calculateFailureRate } from './utils';
 import './App.css';
 
 interface DnsProvider {
@@ -16,22 +17,6 @@ const DEFAULT_PROVIDERS: DnsProvider[] = [
   { name: 'NextDNS', servers: ['45.90.28.0', '45.90.30.0'] },
   { name: 'AdGuard', servers: ['94.140.14.14', '94.140.15.15'] },
 ];
-
-function calculateMedian(arr: number[]): number {
-  const valid = arr.filter((n) => n !== -1);
-  if (!valid.length) return -1;
-  const sorted = [...valid].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 !== 0
-    ? sorted[mid]
-    : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
-}
-
-function calculateFailureRate(arr: number[]): number {
-  if (!arr.length) return 0;
-  const failures = arr.filter((n) => n === -1).length;
-  return Math.round((failures / arr.length) * 100);
-}
 
   // Wider and cleaner sparkline for table view
   const Sparkline = ({ data }: { data: number[] }) => {
