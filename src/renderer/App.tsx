@@ -94,14 +94,14 @@ function Dashboard() {
     setCurrentDns(dns);
     if (dns && dns.length > 0) {
       setProviders((prev) => {
-        const hasCurrent = prev.find((p) => p.name === 'Current System DNS');
+        const hasCurrent = prev.find((p) => p.name === 'System DNS');
         if (hasCurrent) {
           return prev.map((p) =>
-            p.name === 'Current System DNS' ? { ...p, servers: dns } : p
+            p.name === 'System DNS' ? { ...p, servers: dns } : p
           );
         }
         return [
-          { name: 'Current System DNS', servers: dns, isCustom: true },
+          { name: 'System DNS', servers: dns, isCustom: true },
           ...prev,
         ];
       });
@@ -402,11 +402,11 @@ function Dashboard() {
               </form>
 
               {/* Manage Custom Servers */}
-              {providers.some(p => p.isCustom && p.name !== 'Current System DNS') && (
+              {providers.some(p => p.isCustom && p.name !== 'System DNS') && (
                 <div className="mt-8 pt-6 border-t border-slate-800">
                   <h3 className="text-sm font-semibold text-slate-400 mb-3">Manage Custom List</h3>
                   <ul className="space-y-2">
-                    {providers.filter(p => p.isCustom && p.name !== 'Current System DNS').map(p => (
+                    {providers.filter(p => p.isCustom && p.name !== 'System DNS').map(p => (
                       <li key={p.name} className="flex justify-between items-center text-sm bg-slate-950 border border-slate-800 rounded-lg p-2 px-3">
                         <span className="text-slate-300 truncate pr-2">{p.name}</span>
                         <button 
