@@ -12,10 +12,10 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
 import dns from 'dns';
 import { performance } from 'perf_hooks';
+import MenuBuilder from './menu';
+import { resolveHtmlPath } from './util';
 
 class AppUpdater {
   constructor() {
@@ -42,16 +42,18 @@ ipcMain.handle('test-dns-speed', async (event, server: string) => {
     // Timeout after 3 seconds to avoid hanging on dead servers
     resolver.setServers([server]);
     const start = performance.now();
-    
+
     // We use a Promise.race to implement a timeout, as dns.promises doesn't have a direct timeout for a single query
     const resolvePromise = resolver.resolve4('google.com');
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000));
-    
+    const timeoutPromise = new Promise((resolve, reject) => {
+      setTimeout(() => reject(new Error('Timeout')), 3000);
+    });
+
     await Promise.race([resolvePromise, timeoutPromise]);
-    
+
     const end = performance.now();
     return Math.round(end - start);
-  } catch (error) {
+  } catch {
     return -1; // -1 indicates failure or timeout
   }
 });

@@ -6,8 +6,10 @@ export type Channels = 'ipc-example';
 
 const electronHandler = {
   dns: {
-    getCurrentDns: (): Promise<string[]> => ipcRenderer.invoke('get-current-dns'),
-    testDnsSpeed: (server: string): Promise<number> => ipcRenderer.invoke('test-dns-speed', server),
+    getCurrentDns: (): Promise<string[]> =>
+      ipcRenderer.invoke('get-current-dns'),
+    testDnsSpeed: (server: string): Promise<number> =>
+      ipcRenderer.invoke('test-dns-speed', server),
   },
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
